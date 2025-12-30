@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>To: 李树娴</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        :root { --accent: #ff4757; --glass: rgba(255, 255, 255, 0.1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { height: 100%; width: 100%; background: #050505; color: white; overflow: hidden; font-family: 'PingFang SC', sans-serif; }
+        #star-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+        .swiper { width: 100%; height: 100vh; }
+        .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 30px; }
+        .content { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .swiper-slide-active .content { opacity: 1; transform: translateY(0); }
+        h1 { font-size: 2.8rem; color: var(--accent); letter-spacing: 10px; margin-bottom: 10px; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; text-align: left; }
+        .en-box { border: 2px solid #f1c40f; padding: 20px; border-radius: 15px; margin-top: 20px; }
+        .timer-num { font-size: 2rem; font-weight: bold; color: var(--accent); margin: 20px 0; display: block; }
+        .btn { background: var(--accent); color: white; padding: 12px 40px; border-radius: 30px; border: none; font-weight: bold; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        .hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); opacity: 0.5; font-size: 12px; animation: breathe 2s infinite; z-index: 10; }
+        @keyframes breathe { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.8; } }
+    </style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+<div class="hint">向上滑动 · 开启惊喜</div>
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="content"><h1>李树娴</h1><p style="opacity: 0.6; letter-spacing: 2px;">2025.10.28 · 我们的起点</p></div></div>
+        <div class="swiper-slide"><div class="content"><div class="glass-card"><p>“自10月28日相遇那天起，我的世界好像被按下了彩色的快门。”</p><p style="margin-top:15px;">喜欢你面对梦想时的专注，也喜欢你偶尔不经意的小温柔。</p></div></div></div>
+        <div class="swiper-slide"><div class="content"><div class="en-box"><p style="color: #f1c40f; margin-bottom: 10px;">To Lishuxian: Stay Focused 📖</p><p style="font-style: italic;">"Keep going. Everything you are learning is preparing you for something else."</p><p style="margin-top:15px; font-size: 0.9rem; opacity: 0.8;">李树娴，加油复习！<br>等你背完单词，我们一起去看更远的风景。</p></div></div></div>
+        <div class="swiper-slide"><div class="content"><p>我们已经携手走过</p><div id="timer" class="timer-num">正在计算...</div><button class="btn" onclick="alert('加油李树娴，我会一直支持你！❤️')">点击获取能量</button></div></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    new Swiper(".mySwiper", { direction: "vertical", mousewheel: true, speed: 800 });
+    function update() {
+        const diff = new Date() - new Date('2025-10-28T00:00:00');
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff / 3600000) % 24);
+        const m = Math.floor((diff / 60000) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+        document.getElementById('timer').innerHTML = `${d}天 ${h}时 ${m}分 ${s}秒`;
+    }
+    setInterval(update, 1000); update();
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
+    const stars = Array(100).fill().map(() => ({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2, s: Math.random()*0.1 }));
+    function draw() {
+        ctx.clearRect(0,0,w,h); ctx.fillStyle = "white";
+        stars.forEach(s => { s.y -= s.s; if(s.y<0) s.y=h; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); });
+        requestAnimationFrame(draw);
+    }
+    draw();
+</script>
+</body>
+</html>
